@@ -1,7 +1,8 @@
 // src/api/uploadApi.js
 import axios from 'axios';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000'; // Added fallback
+const API_URL = 'https://mahesh-sharma-and-associate.onrender.com'; // Added fallback
+// const API_URL = 'https://mahesh-sharma-and-associate.onrender.com' || 'http://localhost:5000'; // Added fallback
 
 console.log('API URL:', API_URL); // Debug log
 
