@@ -1,7 +1,4 @@
-// import { useState } from 'react';
-
 // function CaseTable({ data }) {
-//   const [selectedCase, setSelectedCase] = useState(null);
 
 //   const getStageColor = (stage) => {
 //     const colors = {
@@ -78,9 +75,6 @@
 //                 <th className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
 //                   Stage
 //                 </th>
-//                 <th className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
-//                   Actions
-//                 </th>
 //               </tr>
 //             </thead>
 //             <tbody className="bg-white divide-y divide-gray-200">
@@ -108,40 +102,18 @@
 //                       {row.stage}
 //                     </span>
 //                   </td>
-//                   <td className="px-6 py-4 whitespace-nowrap">
-//                     <button 
-//                       onClick={() => setSelectedCase(selectedCase === index ? null : index)}
-//                       className="text-blue-600 hover:text-blue-800 transition-colors duration-200 text-lg"
-//                       title="View details"
-//                     >
-//                       👁️
-//                     </button>
-//                   </td>
 //                 </tr>
 //               ))}
 //             </tbody>
 //           </table>
 //         </div>
 //       </div>
-
-//       {/* Case Detail Modal/Expanded View */}
-//       {selectedCase !== null && (
-//         <div className="bg-blue-50 border border-blue-200 rounded-xl p-6">
-//           <h4 className="font-semibold text-blue-900 mb-2">📋 Case Details</h4>
-//           <div className="grid md:grid-cols-2 gap-4 text-sm">
-//             <div><strong>Court:</strong> {data[selectedCase].courtNo}</div>
-//             <div><strong>Item:</strong> {data[selectedCase].itemNo}</div>
-//             <div><strong>Case Number:</strong> {data[selectedCase].caseNo}</div>
-//             <div><strong>Stage:</strong> {data[selectedCase].stage}</div>
-//             <div className="md:col-span-2"><strong>Title:</strong> {data[selectedCase].caseTitle}</div>
-//           </div>
-//         </div>
-//       )}
 //     </div>
 //   );
 // }
 
 // export default CaseTable;
+
 
 
 
@@ -165,7 +137,7 @@ function CaseTable({ data }) {
   };
 
   return (
-    <div className="mt-8 space-y-6">
+    <div className="mt-8 space-y-6 w-full max-w-7xl mx-auto px-4">
       <div className="flex items-center space-x-3">
         <div className="p-2 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-lg">
           <span className="text-white text-xl">📋</span>
@@ -205,21 +177,21 @@ function CaseTable({ data }) {
       </div>
 
       {/* Desktop Table View */}
-      <div className="hidden md:block bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm">
+      <div className="hidden md:block bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm w-full">
         <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
+          <table className="w-full divide-y divide-gray-200">
             <thead className="bg-gradient-to-r from-gray-50 to-gray-100">
               <tr>
-                <th className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
+                <th className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider w-1/5">
                   Court & Item
                 </th>
-                <th className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
+                <th className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider w-1/5">
                   Case Details
                 </th>
-                <th className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
+                <th className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider w-2/5">
                   Case Title
                 </th>
-                <th className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
+                <th className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider w-1/5">
                   Stage
                 </th>
               </tr>
@@ -240,7 +212,7 @@ function CaseTable({ data }) {
                     </div>
                   </td>
                   <td className="px-6 py-4">
-                    <div className="text-sm text-gray-900 max-w-xs truncate" title={row.caseTitle}>
+                    <div className="text-sm text-gray-900" title={row.caseTitle}>
                       {row.caseTitle}
                     </div>
                   </td>
@@ -260,4 +232,3 @@ function CaseTable({ data }) {
 }
 
 export default CaseTable;
-

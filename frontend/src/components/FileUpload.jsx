@@ -1,21 +1,31 @@
-import { useState } from 'react';
-import { uploadFile } from '../api/uploadApi';
-import CaseTable from './CaseTable';
+import { useState, useEffect } from "react";
+import { uploadFile } from "../api/uploadApi";
+import CaseTable from "./CaseTable";
 
 function FileUpload() {
   const [file, setFile] = useState(null);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [caseData, setCaseData] = useState([]);
   const [isDragOver, setIsDragOver] = useState(false);
+  const [showMessage, setShowMessage] = useState(false);
+  useEffect(() => {
+    if (message) {
+      setShowMessage(false);
+      const timer = setTimeout(() => {
+        setShowMessage(true);
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [message]);
 
   const handleFileChange = (selectedFile) => {
     setFile(selectedFile);
-    setMessage('');
+    setMessage("");
     setCaseData([]);
 
     if (selectedFile) {
-      console.log('File selected:', {
+      console.log("File selected:", {
         name: selectedFile.name,
         type: selectedFile.type,
         size: selectedFile.size,
@@ -46,17 +56,17 @@ function FileUpload() {
     e.preventDefault();
 
     if (!file) {
-      setMessage('Please select a file');
+      setMessage("Please select a file");
       return;
     }
 
-    if (file.type !== 'text/html') {
-      setMessage('Please upload a valid HTML file');
+    if (file.type !== "text/html") {
+      setMessage("Please upload a valid HTML file");
       return;
     }
 
     setIsLoading(true);
-    setMessage('Processing your file...');
+    setMessage("Processing your file...");
 
     try {
       const response = await uploadFile(file);
@@ -64,11 +74,15 @@ function FileUpload() {
       setCaseData(response.data || []);
 
       if (response.data?.length === 0) {
-        setMessage('File processed but no case data found. Please check HTML structure.');
+        setMessage(
+          "File processed but no case data found. Please check HTML structure."
+        );
       }
     } catch (error) {
-      console.error('Upload error:', error);
-      setMessage(typeof error === 'string' ? error : 'Upload failed. Please try again.');
+      console.error("Upload error:", error);
+      setMessage(
+        typeof error === "string" ? error : "Upload failed. Please try again."
+      );
       setCaseData([]);
     } finally {
       setIsLoading(false);
@@ -85,8 +99,12 @@ function FileUpload() {
               <span className="text-white text-3xl">📤</span>
             </div>
           </div>
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">Causelist Processor</h1>
-          <p className="text-gray-600 text-lg">Upload your HTML causelist to extract and organize case details</p>
+          <h1 className="text-4xl font-bold text-gray-900 mb-2">
+            Causelist Processor
+          </h1>
+          <p className="text-gray-600 text-lg">
+            Upload your HTML causelist to extract and organize case details
+          </p>
         </div>
 
         {/* Upload Card */}
@@ -100,10 +118,10 @@ function FileUpload() {
                 onDragLeave={handleDragLeave}
                 className={`relative border-2 border-dashed rounded-xl p-8 text-center transition-all duration-300 cursor-pointer ${
                   isDragOver
-                    ? 'border-blue-400 bg-blue-50'
+                    ? "border-blue-400 bg-blue-50"
                     : file
-                    ? 'border-green-400 bg-green-50'
-                    : 'border-gray-300 hover:border-blue-400 hover:bg-gray-50'
+                    ? "border-green-400 bg-green-50"
+                    : "border-gray-300 hover:border-blue-400 hover:bg-gray-50"
                 }`}
               >
                 <input
@@ -112,17 +130,19 @@ function FileUpload() {
                   onChange={(e) => handleFileChange(e.target.files[0])}
                   className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                 />
-                
+
                 <div className="space-y-4">
                   {file ? (
                     <div className="text-6xl">✅</div>
                   ) : (
                     <div className="text-6xl">📤</div>
                   )}
-                  
+
                   {file ? (
                     <div>
-                      <p className="text-lg font-medium text-green-700">File Selected</p>
+                      <p className="text-lg font-medium text-green-700">
+                        File Selected
+                      </p>
                       <p className="text-green-600 font-medium">{file.name}</p>
                       <p className="text-sm text-gray-500 mt-1">
                         {(file.size / 1024).toFixed(2)} KB • {file.type}
@@ -145,8 +165,8 @@ function FileUpload() {
                 disabled={isLoading || !file}
                 className={`w-full py-4 px-6 rounded-xl font-semibold text-white transition-all duration-300 transform ${
                   isLoading || !file
-                    ? 'bg-gray-400 cursor-not-allowed'
-                    : 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 hover:scale-105 shadow-lg hover:shadow-xl'
+                    ? "bg-gray-400 cursor-not-allowed"
+                    : "bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 hover:scale-105 shadow-lg hover:shadow-xl"
                 }`}
               >
                 {isLoading ? (
@@ -164,14 +184,20 @@ function FileUpload() {
             </div>
 
             {/* Status Message */}
-            {message && (
-              <div className={`mt-6 p-4 rounded-xl border flex items-start space-x-3 ${
-                message.includes('successfully') || message.includes('processed')
-                  ? 'bg-green-50 border-green-200 text-green-800'
-                  : 'bg-red-50 border-red-200 text-red-800'
-              }`}>
+            {message && showMessage && (
+              <div
+                className={`mt-6 p-4 rounded-xl border flex items-start space-x-3 ${
+                  message.includes("successfully") ||
+                  message.includes("processed")
+                    ? "bg-green-50 border-green-200 text-green-800"
+                    : "bg-red-50 border-red-200 text-red-800"
+                }`}
+              >
                 <span className="text-xl mt-0.5 flex-shrink-0">
-                  {message.includes('successfully') || message.includes('processed') ? '✅' : '❌'}
+                  {message.includes("successfully") ||
+                  message.includes("processed")
+                    ? "✅"
+                    : "❌"}
                 </span>
                 <p className="font-medium">{message}</p>
               </div>
@@ -189,6 +215,5 @@ function FileUpload() {
     </div>
   );
 }
-
 
 export default FileUpload;
