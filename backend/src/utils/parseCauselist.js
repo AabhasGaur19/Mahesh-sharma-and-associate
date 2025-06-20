@@ -4,8 +4,6 @@ function parseCauselist(htmlContent) {
   const $ = cheerio.load(htmlContent);
   const extractedData = [];
 
-  console.log('HTML content length:', htmlContent.length);
-
   // Find all court sections by looking for "Court No : X" patterns
   const courtSections = [];
   
@@ -22,12 +20,10 @@ function parseCauselist(htmlContent) {
     }
   });
 
-  console.log('Found courts:', courtSections.map(c => c.courtNo));
 
   // Process each court section
   courtSections.forEach((courtSection, courtIndex) => {
     const currentCourtNo = courtSection.courtNo;
-    console.log(`Processing Court No: ${currentCourtNo}`);
 
     // Find the next court section to determine the boundary
     const nextCourtIndex = courtIndex + 1 < courtSections.length ? 
@@ -63,7 +59,6 @@ function parseCauselist(htmlContent) {
         const match = text.match(pattern);
         if (match) {
           currentStage = match[0].trim();
-          console.log(`Found stage for Court ${currentCourtNo}: ${currentStage}`);
           break;
         }
       }
@@ -149,7 +144,6 @@ function parseCauselist(htmlContent) {
                     caseTitle: caseTitle,
                     stage: currentStage
                   });
-                  console.log(`Added case entry: Court ${currentCourtNo}, Item ${itemNo}, Case ${caseNo}`);
                 }
               }
             }
@@ -161,7 +155,6 @@ function parseCauselist(htmlContent) {
 
   // Fallback: If no court sections found, try global parsing
   if (courtSections.length === 0) {
-    console.log('No court sections found, trying global parsing...');
     
     const rows = $('tr');
     let currentCourtNo = 'Unknown';
@@ -215,10 +208,10 @@ function parseCauselist(htmlContent) {
     courtSummary[item.courtNo].stages.add(item.stage);
   });
 
-  console.log('Summary by court:');
-  Object.keys(courtSummary).forEach(courtNo => {
-    console.log(`Court ${courtNo}: ${courtSummary[courtNo].count} cases, Stages: ${Array.from(courtSummary[courtNo].stages).join(', ')}`);
-  });
+  // console.log('Summary by court:');
+  // Object.keys(courtSummary).forEach(courtNo => {
+  //   console.log(`Court ${courtNo}: ${courtSummary[courtNo].count} cases, Stages: ${Array.from(courtSummary[courtNo].stages).join(', ')}`);
+  // });
 
   return extractedData;
 }

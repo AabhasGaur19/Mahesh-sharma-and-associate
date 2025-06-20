@@ -1,45 +1,3 @@
-// // src/components/CaseTable.jsx
-// function CaseTable({ data }) {
-//   return (
-//     <div className="mt-6">
-//       <h3 className="text-xl font-semibold mb-4 text-gray-800">Extracted Case Details</h3>
-//       <div className="overflow-x-auto">
-//         <table className="min-w-full bg-white border border-gray-200">
-//           <thead className="bg-gray-100">
-//             <tr>
-//               <th className="py-2 px-4 border-b text-left text-gray-700 font-bold">Court No</th>
-//               <th className="py-2 px-4 border-b text-left text-gray-700 font-bold">Item No</th>
-//               <th className="py-2 px-4 border-b text-left text-gray-700 font-bold">Case No</th>
-//               <th className="py-2 px-4 border-b text-left text-gray-700 font-bold">Case Title</th>
-//               <th className="py-2 px-4 border-b text-left text-gray-700 font-bold">Stage</th>
-//             </tr>
-//           </thead>
-//           <tbody>
-//             {data.map((row, index) => (
-//               <tr key={index} className="hover:bg-gray-50">
-//                 <td className="py-2 px-4 border-b text-gray-600">{row.courtNo}</td>
-//                 <td className="py-2 px-4 border-b text-gray-600">{row.itemNo}</td>
-//                 <td className="py-2 px-4 border-b text-gray-600">{row.caseNo}</td>
-//                 <td className="py-2 px-4 border-b text-gray-600">{row.caseTitle}</td>
-//                 <td className="py-2 px-4 border-b text-gray-600">{row.stage}</td>
-//               </tr>
-//             ))}
-//           </tbody>
-//         </table>
-//       </div>
-//     </div>
-//   );
-// }
-
-// export default CaseTable;
-
-
-
-
-
-
-//v2
-// src/components/CaseTable.jsx
 import { useState } from 'react';
 
 function CaseTable({ data }) {
@@ -77,7 +35,7 @@ function CaseTable({ data }) {
       {/* Mobile Card View */}
       <div className="grid gap-4 md:hidden">
         {data.map((row, index) => (
-          <div key={index} className="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-all duration-300 hover:border-blue-300">
+          <div key={index} className="bg-white border border-gray-500 rounded-xl p-6 hover:shadow-lg transition-all duration-300 hover:border-blue-300">
             <div className="flex items-start justify-between mb-4">
               <div className="flex items-center space-x-2">
                 <span className="text-lg">{getCaseTypeIcon(row.caseNo)}</span>

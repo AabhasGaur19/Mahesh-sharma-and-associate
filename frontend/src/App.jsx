@@ -1,4 +1,3 @@
-// src/App.jsx
 import FileUpload from './components/FileUpload';
 
 function App() {
