@@ -1,14 +1,13 @@
-// server.js (in root backend folder)
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const uploadRoutes = require('./src/routes/uploadRoutes'); // Correct path from root to src folder
+const uploadRoutes = require('./src/routes/uploadRoutes'); 
 
 const app = express();
 
 // Middleware
 app.use(cors({
-  origin: 'http://localhost:5173', // Vite default port
+  origin: 'http://localhost:5173', 
   credentials: true
 }));
 app.use(express.json());
@@ -33,5 +32,4 @@ app.use((error, req, res, next) => {
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
-  console.log(`CORS enabled for: http://localhost:5173`);
 });
