@@ -60,6 +60,11 @@ app.use((req, res, next) => {
   next();
 });
 
+// Health check endpoint
+app.get('/api/health', (req, res) => {
+  res.status(200).json({ status: 'OK' });
+});
+
 // Routes
 app.use('/api', uploadRoutes);
 
